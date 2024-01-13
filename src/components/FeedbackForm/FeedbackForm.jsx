@@ -1,15 +1,23 @@
 import { Formik, Form, Field } from 'formik';
-import css from './FeedbackForm.module.css';
+// import css from './FeedbackForm.module.css';
+
+const initialValues = {
+  username: '',
+  email: '',
+};
 
 export const FeedbackForm = () => {
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.resetForm();
+  };
+
   return (
-    <Formik initialValues={{}} onSubmit={() => {}}>
-      <Form className={css.form}>
-        <Field className={css.field} type="text" name="username" />
-        <Field className={css.field} type="email" name="email" />
-        <button className={css.btn} type="submit">
-          Submit
-        </button>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <Field type="text" name="username" />
+        <Field type="email" name="email" />
+        <button type="submit">Submit</button>
       </Form>
     </Formik>
   );
