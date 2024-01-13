@@ -1,11 +1,11 @@
 import './App.css';
 // import { useState } from 'react';
-import { LoginForm } from './LoginForm/LoginForm';
+import { FeedbackForm } from './FeedbackForm/FeedbackForm';
 
 export const App = () => {
   return (
     <div>
-      <LoginForm />
+      <FeedbackForm />
     </div>
   );
 };
