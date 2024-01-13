@@ -1,0 +1,22 @@
+@import url('./css/reset.css');
+@import './css/normalize.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: 'Comfortaa', sans-serif;
+  color-scheme: light dark;
+  color: rgba(35, 30, 30, 0.87);
+  background-color: #e5e5e5;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
