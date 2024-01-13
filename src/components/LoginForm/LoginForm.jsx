@@ -1,24 +1,17 @@
-export const LoginForm = ({ onSubmit }) => {
-  const handleSubmit = evt => {
-    evt.preventDefault();
+// import { useId } from 'react';
+// export const LoginForm = () => {
+//   const loginId = useId();
+//   const passwordId = useId();
 
-    const form = evt.target;
-    const { login, password } = form.elements;
+//   return (
+//     <form>
+//       <label htmlFor={loginId}>Login</label>
+//       <input type="text" name="login" id={loginId} />
 
-    // Викликаємо пропс onSubmit
-    onSubmit({
-      login: login.value,
-      password: password.value,
-    });
+//       <label htmlFor={passwordId}>Password</label>
+//       <input type="password" name="password" id={passwordId} />
 
-    form.reset();
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="login" />
-      <input type="password" name="password" />
-      <button type="submit">Login</button>
-    </form>
-  );
-};
+//       <button type="submit">Login</button>
+//     </form>
+//   );
+// };
