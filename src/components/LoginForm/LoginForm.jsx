@@ -1,17 +1,33 @@
-// import { useId } from 'react';
-// export const LoginForm = () => {
-//   const loginId = useId();
-//   const passwordId = useId();
+import { useState } from 'react';
+export const LoginForm = () => {
+  const [values, setValues] = useState({
+    login: '',
+    password: '',
+  });
 
-//   return (
-//     <form>
-//       <label htmlFor={loginId}>Login</label>
-//       <input type="text" name="login" id={loginId} />
+  const handleChange = evt => {
+    setValues({
+      ...values,
+      [evt.target.name]: evt.target.value,
+    });
+  };
 
-//       <label htmlFor={passwordId}>Password</label>
-//       <input type="password" name="password" id={passwordId} />
+  const handleSumit = evt => {
+    evt.preventDefault();
 
-//       <button type="submit">Login</button>
-//     </form>
-//   );
-// };
+    console.log(values);
+
+    setValues({
+      login: '',
+      password: '',
+    });
+  };
+
+  return (
+    <form onSubmit={handleSumit}>
+      <input type="text" name="login" value={values.login} onChange={handleChange} />
+      <input type="password" name="password" value={values.password} onChange={handleChange} />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
