@@ -1,48 +1,22 @@
 import './App.css';
-// import { SearchBar } from './SearchBar/SearchBar';
 import { useState } from 'react';
-// import { LangSwitcher } from './LangSwitcher/LangSwitcher';
 
 export const App = () => {
-  const [coffeeSize, setCoffeeSize] = useState('sm');
+  const [hasAccepted, setHasAccepted] = useState(false);
 
-  const handleSizeChange = evt => {
-    setCoffeeSize(evt.target.value);
+  const handleChange = evt => {
+    setHasAccepted(evt.target.checked);
   };
 
   return (
-    <>
-      <h1>Select coffee size</h1>
+    <div>
       <label>
-        <input
-          type="radio"
-          name="coffeeSize"
-          value="sm"
-          checked={coffeeSize === 'sm'}
-          onChange={handleSizeChange}
-        />
-        Small
+        <input type="checkbox" name="terms" checked={hasAccepted} onChange={handleChange} />I accept
+        terms and conditions
       </label>
-      <label>
-        <input
-          type="radio"
-          name="coffeeSize"
-          value="md"
-          checked={coffeeSize === 'md'}
-          onChange={handleSizeChange}
-        />
-        Meduim
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="coffeeSize"
-          value="lg"
-          checked={coffeeSize === 'lg'}
-          onChange={handleSizeChange}
-        />
-        Large
-      </label>
-    </>
+      <button type="button" disabled={!hasAccepted}>
+        Proceed
+      </button>
+    </div>
   );
 };
