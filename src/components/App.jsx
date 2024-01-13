@@ -1,5 +1,6 @@
 import './App.css';
 import { LoginForm } from './LoginForm/LoginForm';
+import { MyComponent } from './MyComponent/MyComponent';
 export const App = () => {
   // Колбек-функція для обробки сабміту форми
   const handleLogin = userData => {
@@ -12,6 +13,7 @@ export const App = () => {
       <h1>Please login to your account!</h1>
       {/* Передаємо колбек як пропс форми */}
       <LoginForm onSubmit={handleLogin} />
+      <MyComponent />
     </div>
   );
 };
