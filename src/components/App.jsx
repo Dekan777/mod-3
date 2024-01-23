@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Audio } from 'react-loader-spinner';
-import s from './App.module.css';
+import { fetchArticlesWithTopic } from '../arcticles-api';
 const ArticleList = ({ items }) => (
   <ul>
     {items.map(({ objectID, url, title }) => (
@@ -23,9 +23,9 @@ export const App = () => {
     async function fetchArticles() {
       try {
         setLoading(true);
-        const response = await axios.get('https://hn.algolia.com/api/v1/search?query=react');
-        console.log(response);
-        setArticles(response.data.hits);
+        const data = await fetchArticlesWithTopic('react');
+
+        setArticles(data);
       } catch (error) {
         setError(true);
       } finally {
