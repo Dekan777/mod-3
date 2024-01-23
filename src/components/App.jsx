@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Audio } from 'react-loader-spinner';
-
+import s from './App.module.css';
 const ArticleList = ({ items }) => (
   <ul>
     {items.map(({ objectID, url, title }) => (
@@ -17,6 +17,7 @@ const ArticleList = ({ items }) => (
 export const App = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchArticles() {
@@ -26,7 +27,7 @@ export const App = () => {
         console.log(response);
         setArticles(response.data.hits);
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        setError(true);
       } finally {
         // 2. Встановлюємо індикатор в false після запиту
         setLoading(false);
@@ -52,6 +53,7 @@ export const App = () => {
         />
       )}
       {articles.length > 0 && <ArticleList items={articles} />}
+      {error && <p>Whoops, something went wrong! Please try reloading this page!</p>}
     </div>
   );
 };
