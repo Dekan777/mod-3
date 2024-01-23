@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { ThreeDots } from 'react-loader-spinner';
-import { fetchArticlesWithTopic } from '../articles-api.js';
+import axios from 'axios';
 
 const ArticleList = ({ items }) => (
   <ul>
@@ -17,20 +15,20 @@ const ArticleList = ({ items }) => (
 
 export const App = () => {
   const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchArticles() {
       try {
-        setLoading(true);
-        // 2. Використовуємо HTTP-функцію
-        const data = await fetchArticlesWithTopic('react');
-        setArticles(data);
+        const response = await axios.get('https://hn.algolia.com/api/v1/search?query=react');
+        console.log(response);
+
+        if (response.data) {
+          setArticles(response.data.hits);
+        } else {
+          console.error('Unexpected response format');
+        }
       } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching articles:', error);
       }
     }
 
@@ -40,8 +38,7 @@ export const App = () => {
   return (
     <div>
       <h1>Latest articles</h1>
-      {loading && <p>Loading data, please wait...</p>}
-      {error && <p>Whoops, something went wrong! Please try reloading this page!</p>}
+
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
   );
