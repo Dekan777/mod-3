@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { SearchForm } from './SearchForm';
 import { Audio } from 'react-loader-spinner';
 import { fetchArticlesWithTopic } from '../arcticles-api';
 const ArticleList = ({ items }) => (
@@ -19,6 +20,21 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const handleSearch = async topic => {
+    try {
+      setArticles([]);
+      setError(false);
+      setLoading(true);
+      const data = await fetchArticlesWithTopic(topic);
+      setArticles(data);
+    } catch (error) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // console.log(articles);
   useEffect(() => {
     async function fetchArticles() {
       try {
@@ -40,7 +56,7 @@ export const App = () => {
   return (
     <div>
       <h1>Latest articles</h1>
-
+      <SearchForm onSearch={handleSearch} />
       {loading && (
         <Audio
           height="100"
