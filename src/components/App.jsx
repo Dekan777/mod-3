@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { ThreeDots } from 'react-loader-spinner';
+// import axios from 'axios';
+// import { ThreeDots } from 'react-loader-spinner';
+import { fetchArticlesWithTopic } from '../articles-api.js';
 
 const ArticleList = ({ items }) => (
   <ul>
@@ -17,17 +18,18 @@ const ArticleList = ({ items }) => (
 export const App = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchArticles() {
       try {
         setLoading(true);
-        const response = await axios.get('https://hn.algolia.com/api/v1/search?query=react');
-        setArticles(response.data.hits);
+        // 2. Використовуємо HTTP-функцію
+        const data = await fetchArticlesWithTopic('react');
+        setArticles(data);
       } catch (error) {
-        // Тут будемо обробляти помилку
+        setError(true);
       } finally {
-        // 2. Встановлюємо індикатор в false після запиту
         setLoading(false);
       }
     }
@@ -38,18 +40,8 @@ export const App = () => {
   return (
     <div>
       <h1>Latest articles</h1>
-      {loading && (
-        <ThreeDots
-          visible={true}
-          height="80"
-          width="80"
-          color="#4fa94d"
-          radius="9"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      )}
+      {loading && <p>Loading data, please wait...</p>}
+      {error && <p>Whoops, something went wrong! Please try reloading this page!</p>}
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
   );
