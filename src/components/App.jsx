@@ -3,6 +3,9 @@ import { useEffect, useState, useRef, forwardRef } from 'react';
 import { SearchForm } from './SearchForm';
 import { Audio } from 'react-loader-spinner';
 import { fetchArticlesWithTopic } from '../arcticles-api';
+import { MyComponent } from './MyComponent';
+import { ComponentA } from './ComponentA';
+import { ComponentB } from './ComponentB';
 
 const CustomButton = forwardRef((props, ref) => <button ref={ref}>{props.children}</button>);
 
@@ -82,6 +85,8 @@ export const App = () => {
 
   return (
     <div>
+      <MyComponent />
+      <ComponentB />
       <h1>Latest articles</h1>
       <SearchForm onSearch={handleSearch} />
       {loading && (
@@ -97,8 +102,10 @@ export const App = () => {
       )}
       {articles.length > 0 && <ArticleList items={articles} />}
       {error && <p>Whoops, something went wrong! Please try reloading this page!</p>}
-      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+      {/* <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" /> */}
       <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>
+
+      <ComponentA />
     </div>
   );
 };
