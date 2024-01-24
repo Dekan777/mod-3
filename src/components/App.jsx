@@ -1,8 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, forwardRef } from 'react';
 // import axios from 'axios';
 import { SearchForm } from './SearchForm';
 import { Audio } from 'react-loader-spinner';
 import { fetchArticlesWithTopic } from '../arcticles-api';
+
+const CustomButton = forwardRef((props, ref) => <button ref={ref}>{props.children}</button>);
+
+const Player = ({ source }) => {
+  const playerRef = useRef();
+
+  const play = () => playerRef.current.play();
+
+  const pause = () => playerRef.current.pause();
+
+  return (
+    <div>
+      <video ref={playerRef} src={source}>
+        Sorry, your browser does not support embedded videos.
+      </video>
+      <div>
+        <button onClick={play}>Play</button>
+        <button onClick={pause}>Pause</button>
+      </div>
+    </div>
+  );
+};
+
 const ArticleList = ({ items }) => (
   <ul>
     {items.map(({ objectID, url, title }) => (
@@ -19,6 +42,10 @@ export const App = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const btnRef = useRef();
+
+  useEffect(() => btnRef.current.focus(), []);
 
   const handleSearch = async topic => {
     try {
@@ -70,6 +97,8 @@ export const App = () => {
       )}
       {articles.length > 0 && <ArticleList items={articles} />}
       {error && <p>Whoops, something went wrong! Please try reloading this page!</p>}
+      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+      <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>
     </div>
   );
 };
